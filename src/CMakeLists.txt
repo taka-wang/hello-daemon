@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 2.8)
+set(PROJECT_NAME SampleProject)
+project(${PROJECT_NAME})
+set(BINARY_NAME hello-daemon)
+set(CMAKE_C_FLAGS "-W -Wall -Os")
+set(SOURCE_FILES hello.c)
+add_executable(${BINARY_NAME} ${SOURCE_FILES})
+INSTALL(TARGETS ${BINARY_NAME} RUNTIME DESTINATION /usr/bin/)

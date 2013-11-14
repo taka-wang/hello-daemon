@@ -1,0 +1,34 @@
+#!/bin/sh /etc/rc.common
+
+START=99
+
+LIST_SEP="
+"
+
+HELLO_DAEMON_CMD=/usr/bin/hello-daemon
+
+is_enabled() {
+    config_get_bool enabled "$1" 'enabled' 0
+    [ $enabled -gt 0 ]
+}
+
+start_instance() {
+    local s="$1"
+    is_enabled "$s" || return 1
+    eval service_start "'$HELLO_DAEMON_CMD'"
+}
+
+stop_instance() {
+    local s="$1"
+    service_stop "$HELLO_DAEMON_CMD"
+}
+
+start() {
+    config_load 'hello-daemon'
+    config_foreach start_instance 'hello-daemon'
+}
+
+stop() {
+    config_load 'hello-daemon'
+    config_foreach stop_instance 'hello-daemon'
+}
